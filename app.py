@@ -5,10 +5,11 @@ import websockets
 from chatbot import AIChatBot
 
 def main(args):
-# Initialize your chatbot
+    # Initialize your chatbot
     e2e_chatbot = AIChatBot(args)
     e2e_chatbot.build_bot()
 
+    # Define the WebSocket server
     async def chat_handler(websocket, path):
         async for message in websocket:
             query = message.strip()
@@ -23,9 +24,9 @@ def main(args):
     # Start the WebSocket server
     start_server = websockets.serve(chat_handler, "localhost", 8765)
 
+    # Run the WebSocket server
     asyncio.get_event_loop().run_until_complete(start_server)
     asyncio.get_event_loop().run_forever()
-
 
 system_prompt = """
     You are an AI chatbot that is designed to answer questions related to E2E Networks. 
