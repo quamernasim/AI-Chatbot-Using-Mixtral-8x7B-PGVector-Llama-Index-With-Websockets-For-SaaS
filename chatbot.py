@@ -30,7 +30,7 @@ class AIChatBot:
         self.chunk_overlap = args.chunk_overlap
         self.top_k_index_to_return = args.top_k_index_to_return
 
-    def setup_model(self):
+    def _setup_model(self):
         print("Setting up model")
         # This will wrap the default prompts that are internal to llama-index
         query_wrapper_prompt = PromptTemplate("<|USER|>{query_str}<|ASSISTANT|>")
@@ -64,7 +64,7 @@ class AIChatBot:
         self.llm = llm
         self.embed_model = embed_model
 
-    def apply_settings(self):
+    def _apply_settings(self):
         print("Applying settings")
         Settings.llm = self.llm
         Settings.embed_model = self.embed_model
@@ -73,7 +73,7 @@ class AIChatBot:
         Settings.chunk_size = self.chunk_size
         Settings.chunk_overlap = self.chunk_overlap
 
-    def get_index_from_database(self):
+    def _get_index_from_database(self):
         print("Getting index from database")
         # Creates a URL object from the connection string
         url = make_url(self.database_connection_string)
@@ -93,7 +93,7 @@ class AIChatBot:
         index = VectorStoreIndex.from_vector_store(vector_store=vector_store)
         self.index = index
 
-    def setup_engine(self):
+    def _setup_engine(self):
         print("Setting up engine")
         # Create the retriever that manages the index and the number of results to return
         retriever = VectorIndexRetriever(
@@ -114,10 +114,10 @@ class AIChatBot:
         self.engine = engine
 
     def build_bot(self):
-        self.setup_model()
-        self.apply_settings()
-        self.get_index_from_database()
-        self.setup_engine()
+        self._setup_model()
+        self._apply_settings()
+        self._get_index_from_database()
+        self._setup_engine()
         print("Bot built successfully")
 
 
